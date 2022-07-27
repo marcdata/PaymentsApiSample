@@ -21,6 +21,7 @@ namespace WebApplication1
 
             services.AddSingleton<IOneTimePaymentService, OneTimePaymentService>();
             services.AddSingleton<IUserBalanceService, StubUserBalanceService>();
+            services.AddSingleton<IOneTimePaymentCalculator, OneTimePaymentCalculator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -14,12 +14,15 @@ namespace PaymentsLogic.Services
     public class OneTimePaymentService : IOneTimePaymentService
     {
         IUserBalanceService _userBalanceService;
+        IOneTimePaymentCalculator _paymentCalculator;
 
         public OneTimePaymentService(
-            IUserBalanceService userBalanceService
+            IUserBalanceService userBalanceService,
+            IOneTimePaymentCalculator oneTimePaymentCalculator
             )
         {
             _userBalanceService = userBalanceService ?? throw new ArgumentNullException(nameof(userBalanceService));
+            _paymentCalculator = oneTimePaymentCalculator ?? throw new ArgumentNullException(nameof(oneTimePaymentCalculator));
         }
 
         public async Task<OneTimePaymentView> PostPayment(int userId, decimal amount)
@@ -37,8 +40,7 @@ namespace PaymentsLogic.Services
 
             var userBalance = await _userBalanceService.GetBalanceForUser(userId);
 
-            var calculator = new OneTimePaymentCalculator();
-            (var balanceRemaining, var nextPaymentDate, var matchAmount) = calculator.MakeOneTimePayment(amount, DateTime.Now.Date, userBalance);
+            (var balanceRemaining, var nextPaymentDate, var matchAmount) = _paymentCalculator.CalculatePaymentAndDate(amount, DateTime.Now.Date, userBalance);
 
             return new OneTimePaymentView
             {

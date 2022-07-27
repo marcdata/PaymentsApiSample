@@ -14,10 +14,11 @@ namespace UnitTests
         [InlineData(500, 75, "04-08-2022", 421.25, "04-25-2022")]
         public void TestKnownCases(double balance, double paymentAmount, string paymentDateString, double expectedBalance, string expectedNextDateString)
         {
+            // Arrange - here, just the args in.
             var paymentDate = DateTime.Parse(paymentDateString);
 
             // Act
-            var resultTuple = new OneTimePaymentCalculator().MakeOneTimePayment((decimal)paymentAmount, paymentDate, (decimal)balance, useMatch: true);
+            var resultTuple = new OneTimePaymentCalculator().CalculatePaymentAndDate((decimal)paymentAmount, paymentDate, (decimal)balance, useMatch: true);
 
             // Assert
             Assert.Equal((decimal)expectedBalance, resultTuple.balanceRemaining);
@@ -28,11 +29,12 @@ namespace UnitTests
         [Fact]
         public void ExpectedFailingCase()
         {
+            // arrange
             var balance = 100m;
             var payment = 101m;
 
             // act, assert
-            Assert.ThrowsAny<Exception>(() => new OneTimePaymentCalculator().MakeOneTimePayment(payment, new DateTime(2022, 01, 01), balance));
+            Assert.ThrowsAny<Exception>(() => new OneTimePaymentCalculator().CalculatePaymentAndDate(payment, new DateTime(2022, 01, 01), balance));
         }
     }
 }

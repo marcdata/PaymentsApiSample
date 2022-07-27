@@ -4,9 +4,13 @@ using System.Text;
 
 namespace PaymentsLogic.Services
 {
-    public class OneTimePaymentCalculator
+    public interface IOneTimePaymentCalculator
     {
-        public (decimal balanceRemaining, DateTime nextPaymentDate, decimal matchAmount) MakeOneTimePayment(decimal paymentAmount, DateTime paymentDate, decimal beginningBalance, bool? useMatch = true)
+        public (decimal balanceRemaining, DateTime nextPaymentDate, decimal matchAmount) CalculatePaymentAndDate(decimal paymentAmount, DateTime paymentDate, decimal beginningBalance, bool? useMatch = true);
+    }
+    public class OneTimePaymentCalculator : IOneTimePaymentCalculator
+    {
+        public (decimal balanceRemaining, DateTime nextPaymentDate, decimal matchAmount) CalculatePaymentAndDate(decimal paymentAmount, DateTime paymentDate, decimal beginningBalance, bool? useMatch = true)
         {
             var matchAmount = useMatch.Value ? CalculateMatchAmount(paymentAmount) : 0m;
             var balanceRemaining = beginningBalance - paymentAmount - matchAmount;
