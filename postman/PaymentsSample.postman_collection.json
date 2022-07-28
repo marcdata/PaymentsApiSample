@@ -1,0 +1,58 @@
+{
+	"info": {
+		"_postman_id": "f4450889-545e-4b52-9c1a-7a2f236b4937",
+		"name": "PaymentsSample",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "OneTimePayment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "28f15aab-bc78-44e8-adf9-fbd7791dc827",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "userId",
+						"value": "1",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:5001/payments/one-time-payment?amount=40",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"payments",
+						"one-time-payment"
+					],
+					"query": [
+						{
+							"key": "amount",
+							"value": "40"
+						}
+					]
+				},
+				"description": "Make an api call for a one-time-payment with matching logic."
+			},
+			"response": []
+		}
+	]
+}

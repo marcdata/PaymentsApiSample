@@ -27,20 +27,5 @@ namespace PaymentsApi.Controllers
             return new OkObjectResult(await _oneTimePaymentService.PostPayment(userId, amount));
         }
 
-        [Route("/[controller]/checkread")]
-        [HttpGet]
-        public IActionResult CheckRead()
-        {
-            return new OkObjectResult("Hello payments.");
-        }
-
-        [Route("/testread")]
-        [HttpGet]
-        public IActionResult TestRead()
-        {
-            return new OkObjectResult("Hello world.");
-        }
-
-
     }
 }
